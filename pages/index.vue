@@ -20,9 +20,9 @@ export default defineComponent({
       page.value = firstPage
     })
 
-    useMeta({
-      title: page.value.title
-    })
+    useMeta(() => ({
+      title: page.value?.title
+    }))
 
     return {
       page

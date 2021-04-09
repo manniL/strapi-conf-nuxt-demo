@@ -14,12 +14,14 @@ export default defineComponent({
     const { $strapi } = useContext()
     const route = useRoute()
     const article = ref({})
+
     useFetch(async () => {
       article.value = await $strapi.$articles.findOne(route.value.params.id)
     })
-    useMeta({
-      title: article.value.title
-    })
+
+    useMeta(() => ({
+      title: article.value?.title
+    }))
 
     return {
       article
