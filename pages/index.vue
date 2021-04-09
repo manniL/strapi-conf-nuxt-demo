@@ -14,7 +14,7 @@ export default {
     }
   },
   async asyncData({ $strapi }) {
-    const page = await $strapi.$pages.findOne('index')
+    const page = {} // await $strapi.$pages.findOne('index')
 
     return { page }
   },

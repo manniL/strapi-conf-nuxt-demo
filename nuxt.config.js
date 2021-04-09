@@ -38,7 +38,7 @@ export default {
     '@nuxtjs/strapi'
   ],
   strapi: {
-    url: 'http://localhost:1337/', // 'https://strapi-conf-nuxt-backend.herokuapp.com/',
+    url: 'https://strapi-conf-nuxt-backend.herokuapp.com/',
     entities: ['pages', 'articles']
   }
 }
