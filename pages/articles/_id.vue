@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article v-if="article">
     <h1>{{ article.title }}</h1>
     <img :src="article.image" width="250" />
     <p v-html="article.content" />
@@ -7,24 +7,22 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      article: {
-        image: {}
-      }
-    }
-  },
-  async asyncData ({ params, $strapi }) {
-    const article = await $strapi.$articles.findOne(params.id)
+import { defineComponent, useAsync, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  setup () {
+    const { $strapi } = useContext()
+    const route = useRoute()
+    const article = useAsync(async () => await $strapi.$articles.findOne(route.value.params.id))
+
+    useMeta({
+      title: article.value?.title
+    })
+
     return {
       article
     }
   },
-  head () {
-    return {
-      title: this.article.title
-    }
-  }
-}
+  head: {}
+})
 </script>

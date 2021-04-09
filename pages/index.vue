@@ -1,27 +1,31 @@
 <template>
-  <div>
+  <div v-if="page">
     <h1>{{ page.title }}</h1>
     <p>{{ page.content }}</p>
-    <blockquote>The source code is available on <a href="https://github.com/manniL/strapi-conf-nuxt-frontend">GitHub</a></blockquote>
+    <blockquote>The source code is available on <a href="https://github.com/manniL/strapi-conf-nuxt-frontend">GitHub</a>
+    </blockquote>
   </div>
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      page: {}
-    }
-  },
-  async asyncData ({ $strapi }) {
-    const [page] = await $strapi.$pages.find({ title: 'Index' })
+import { defineComponent, useAsync, useContext, useMeta } from '@nuxtjs/composition-api'
 
-    return { page }
-  },
-  head () {
+export default defineComponent({
+  setup () {
+    const { $strapi } = useContext()
+    const page = useAsync(async () => {
+      const [page] = await $strapi.$pages.find({ title: 'Index' })
+      return page
+    })
+
+    useMeta({
+      title: page.value?.title
+    })
+
     return {
-      title: this.page.title
+      page
     }
-  }
-}
+  },
+  head: {}
+})
 </script>
