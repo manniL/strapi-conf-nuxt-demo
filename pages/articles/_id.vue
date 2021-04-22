@@ -3,6 +3,9 @@
     <h1>{{ article.title }}</h1>
     <img :src="article.image" width="250" />
     <p v-html="article.content" />
+    <div v-if="$fetchState.error">
+      Oops! Error occurred
+    </div>
   </article>
 </template>
 
